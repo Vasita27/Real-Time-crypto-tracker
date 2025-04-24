@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+  
+  .app-container {
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .crypto-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+  
+  .crypto-table th,
+  .crypto-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .green {
+    color: green;
+  }
+  
+  .red {
+    color: red;
+  }
+  
