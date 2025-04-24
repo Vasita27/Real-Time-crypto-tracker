@@ -1,30 +1,18 @@
-// src/App.js
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectAssets, updateAssets } from './features/crypto/cryptoSlice';
-import { generateRandomUpdate } from './utils/mockWebScoket';
-import CryptoTable from './features/crypto/cryptoTable';
-import './styles.css';
+import React from 'react';
+import './App.css';
+import CryptoTable from './features/crypto/cryptoTable'; // Assuming CryptoTable is in the same directory
+import { Provider } from 'react-redux';
+import store from './app/store'; // Your Redux store
 
-const App = () => {
-  const dispatch = useDispatch();
-  const assets = useSelector(selectAssets);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const updatedAssets = generateRandomUpdate(assets);
-      dispatch(updateAssets(updatedAssets));
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [dispatch, assets]);
-
+function App() {
   return (
-    <div className="app-container">
-      <h1>Real-Time Crypto Tracker</h1>
-      <CryptoTable />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <h1>Crypto Market Dashboard</h1>
+        <CryptoTable />
+      </div>
+    </Provider>
   );
-};
+}
 
 export default App;

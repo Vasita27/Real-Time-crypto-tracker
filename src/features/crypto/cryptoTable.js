@@ -1,43 +1,68 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './table.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCryptoData } from './cryptoSlice';
 
 const symbols = ['btcusdt', 'ethusdt', 'solusdt', 'bnbusdt', 'xrpusdt', 'adausdt'];
 
+ 
 const symbolMeta = {
   BTCUSDT: {
     name: "Bitcoin",
     logo: "https://cdn-icons-png.freepik.com/256/1490/1490849.png",
-    chart: "https://www.coingecko.com/total_market_cap.svg"
+    chart: "https://www.coingecko.com/total_market_cap.svg",
+    max_supply : Math.floor(Math.random() * 2_000_000_000),
+    circulating_supply: Math.floor(Math.random() * 1_000_000_000),
+    market_cap : Math.floor(Math.random() * 50_000_000_000 + 10_000_000),
   },
   ETHUSDT: {
     name: "Ethereum",
     logo: "https://cdn-icons-png.freepik.com/256/7037/7037886.png",
-    chart: "https://www.coingecko.com/coins/825/sparkline.svg"
+    chart: "https://www.coingecko.com/coins/825/sparkline.svg",
+    max_supply : Math.floor(Math.random() * 2_000_000_000),
+    circulating_supply: Math.floor(Math.random() * 1_000_000_000),
+    market_cap : Math.floor(Math.random() * 50_000_000_000 + 10_000_000),
   },
   SOLUSDT: {
     name: "Solana",
     logo: "https://cdn-icons-png.freepik.com/256/17978/17978720.png",
-    chart: "https://www.coingecko.com/coins/975/sparkline.svg"
+    chart: "https://www.coingecko.com/coins/975/sparkline.svg",
+    max_supply : Math.floor(Math.random() * 2_000_000_000),
+    circulating_supply: Math.floor(Math.random() * 1_000_000_000),
+    market_cap : Math.floor(Math.random() * 50_000_000_000 + 10_000_000),
+
   },
   BNBUSDT: {
     name: "Binance Coin",
     logo: "https://cdn-icons-png.freepik.com/256/6001/6001399.png",
-    chart: "https://www.coingecko.com/coins/1094/sparkline.svg"
+    chart: "https://www.coingecko.com/coins/1094/sparkline.svg",
+    max_supply : Math.floor(Math.random() * 2_000_000_000),
+    circulating_supply: Math.floor(Math.random() * 1_000_000_000),
+    market_cap : Math.floor(Math.random() * 50_000_000_000 + 10_000_000),
   },
   XRPUSDT: {
     name: "XRP",
     logo: "https://cdn-icons-png.freepik.com/256/15279/15279117.png",
-    chart: "https://www.coingecko.com/coins/11939/sparkline.svg"
+    chart: "https://www.coingecko.com/coins/11939/sparkline.svg",
+    max_supply : Math.floor(Math.random() * 2_000_000_000),
+    circulating_supply: Math.floor(Math.random() * 1_000_000_000),
+    market_cap : Math.floor(Math.random() * 50_000_000_000 + 10_000_000),
   },
   ADAUSDT: {
     name: "Cardano",
     logo: "https://cdn-icons-png.freepik.com/256/12093/12093020.png",
-    chart: "https://www.coingecko.com/coins/9956/sparkline.svg"
+    chart: "https://www.coingecko.com/coins/9956/sparkline.svg",
+    max_supply : Math.floor(Math.random() * 2_000_000_000),
+    circulating_supply: Math.floor(Math.random() * 1_000_000_000),
+    market_cap : Math.floor(Math.random() * 50_000_000_000 + 10_000_000),
   },
 };
 
 const CryptoTable = () => {
-  const [cryptoData, setCryptoData] = useState({});
+  const dispatch = useDispatch();
+  const cryptoData = useSelector((state) => state.crypto.assets);
+  
+  console.log("Crypto Data:", cryptoData);
   const wsRef = useRef(null);
 
   const createWebSocket = () => {
@@ -48,27 +73,27 @@ const CryptoTable = () => {
     ws.onopen = () => console.log("WebSocket connected ✅");
 
     ws.onmessage = (event) => {
+        console.log("WebSocket message received:", event.data);
       const { data } = JSON.parse(event.data);
       const symbol = data.s;
       const price = parseFloat(data.c);
       const percentChange24h = parseFloat(data.P);
 
-      setCryptoData(prev => ({
-        ...prev,
-        [symbol]: {
-          ...prev[symbol],
+      dispatch(setCryptoData({
+        symbol,
+        data: {
           price,
           percent_change_24h: percentChange24h,
-          ...(!prev[symbol]?.name && { name: symbolMeta[symbol]?.name }),
-          ...(!prev[symbol]?.percent_change_1h && { percent_change_1h: (Math.random() * 10 - 5).toFixed(2) }),
-          ...(!prev[symbol]?.percent_change_7d && { percent_change_7d: (Math.random() * 20 - 10).toFixed(2) }),
-          ...(!prev[symbol]?.market_cap && { market_cap: Math.floor(Math.random() * 500_000_000_000 + 1_000_000_000) }),
-          ...(!prev[symbol]?.volume_24h && { volume_24h: Math.floor(Math.random() * 50_000_000_000 + 10_000_000) }),
-          ...(!prev[symbol]?.circulating_supply && { circulating_supply: Math.floor(Math.random() * 1_000_000_000) }),
-          ...(!prev[symbol]?.max_supply && { max_supply: Math.floor(Math.random() * 2_000_000_000) }),
-          ...(!prev[symbol]?.chart && { chart: symbolMeta[symbol]?.chart || "https://www.svgrepo.com/show/503032/chart-graph.svg" }),
-          ...(!prev[symbol]?.logo && { logo: symbolMeta[symbol]?.logo || "https://via.placeholder.com/24?text=?" }),
-        }
+          name: symbolMeta[symbol]?.name || symbol,
+          percent_change_1h: (Math.random() * 10 - 5).toFixed(2),
+          percent_change_7d: (Math.random() * 20 - 10).toFixed(2),
+          market_cap: symbolMeta[symbol]?.market_cap || Math.floor(Math.random() * 50_000_000_000 + 10_000_000),
+          volume_24h: Math.floor(Math.random() * 50_000_000_000 + 10_000_000),
+          circulating_supply: symbolMeta[symbol]?.circulating_supply || Math.floor(Math.random() * 1_000_000_000),
+          max_supply: symbolMeta[symbol]?.max_supply || Math.floor(Math.random() * 2_000_000_000),
+          chart: symbolMeta[symbol]?.chart || "https://www.svgrepo.com/show/503032/chart-graph.svg",
+          logo: symbolMeta[symbol]?.logo || "https://via.placeholder.com/24?text=?",
+        },
       }));
     };
 
@@ -96,29 +121,28 @@ const CryptoTable = () => {
   // Simulate continuous 1h and 7d percentage updates
   useEffect(() => {
     const interval = setInterval(() => {
-      setCryptoData(prevData => {
-        const updatedData = { ...prevData };
-        Object.keys(updatedData).forEach(symbol => {
-          updatedData[symbol] = {
-            ...updatedData[symbol],
+      Object.keys(cryptoData).forEach(symbol => {
+        dispatch(setCryptoData({
+          symbol,
+          data: {
             percent_change_1h: (
-              parseFloat(updatedData[symbol].percent_change_1h || 0) +
+              parseFloat(cryptoData[symbol].percent_change_1h || 0) +
               (Math.random() * 0.2 - 0.1)
             ).toFixed(2),
             percent_change_7d: (
-              parseFloat(updatedData[symbol].percent_change_7d || 0) +
+              parseFloat(cryptoData[symbol].percent_change_7d || 0) +
               (Math.random() * 0.5 - 0.25)
             ).toFixed(2),
-          };
-        });
-        return updatedData;
+          },
+        }));
       });
     }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [cryptoData, dispatch]);
 
   return (
+    
     <table className="crypto-table">
       <thead>
         <tr>
