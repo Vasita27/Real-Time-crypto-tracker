@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# 📈 Crypto Tracker Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A real-time cryptocurrency dashboard that tracks prices, trends, and other key financial metrics for top cryptocurrencies like Bitcoin, Ethereum, Solana, and more. This app updates live using WebSocket for price and 24-hour change, with simulated data for other metrics.
 
-## Available Scripts
+![Crypto Tracker Demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGtzNmRnOXR0c3Q0NWpneDBnMXNvNzE5eDZzZGMxZmhndmVnc3ZrayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/gjCwN2RxD5cLQg46gr/giphy.gif)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🔧 Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Layer             | Technology                                          |
+|------------------|------------------------------------------------------|
+| Frontend         | **React.js** with functional components + hooks     |
+| Styling          | CSS Modules (`table.css`)                           |
+| Live Data        | Binance WebSocket API (`wss://stream.binance.com`)  |
+| Simulated Data   | JavaScript interval for 1h/7d change                |
+| Icons & Logos    | Freepik CDN PNGs                        |
+| Charts           | Sparkline charts from CoinGecko  (static)                   |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Architecture  
+The Crypto Tracker Dashboard is built as a single-page application (SPA) using React.js, ensuring a fast and seamless user experience without page reloads. It leverages the Binance WebSocket API for real-time cryptocurrency price updates and 24-hour change data, maintaining a continuous connection for live streaming. Other financial metrics like 1-hour/7-day changes and market cap are simulated using JavaScript intervals to mimic dynamic behavior. The component-based architecture promotes modularity, with each UI segment—like the price table and sparkline charts—managed independently. This makes the application highly scalable, maintainable, and easy to extend with new features or additional cryptocurrencies.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ⚙️ Setup Instructions
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone this repository**
+   ```bash
+   git clone https://github.com/Vasita27/Real-Time-crypto-tracker.git
+   cd Real-Time-crypto-tracker
+   ```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+3. **Start the development server**
+   ```bash
+   npm start
+   ```
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##  Features
+-  Real-time price and percentChange24h tracking with binance websocket
+- Beautiful token logos & 7-day trend sparkline charts (Static)
+-  Simulated values for unavailable metrics (1h/7d/market cap/supply)
+- Auto-reconnect WebSocket on failure
+-  Easy to extend with more coins, charts, or analytics
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 📁 Folder Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+CRYPTO-TRACKER/
+├── node_modules/
+├── public/
+├── src/
+│   ├── app/
+│   │   └── store.js
+│   ├── features/
+│   │   └── crypto/
+│   │       ├── cryptoSlice.js
+│   │       └── cryptoTable.js
+│   ├── utils/
+│   │   └── mockWebSocket.js
+│   ├── initialdata.json
+│   ├── table.css
+│   ├── App.css
+│   ├── App.js
+│   ├── App.test.js
+│   ├── index.css
+│   ├── index.js
+│   ├── logo.svg
+│   └── reportWebVitals.js
+├── package.json
+├── package-lock.json
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
+## 🎥 Demo Video  
+▶️ [Watch Demo on YouTube](https://www.youtube.com/) 
+---
+## 📄 License  
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
