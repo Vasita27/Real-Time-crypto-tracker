@@ -1,8 +1,6 @@
 # 📈 Crypto Tracker Dashboard
 
-A real-time cryptocurrency dashboard that tracks prices, trends, and other key financial metrics for top cryptocurrencies like Bitcoin, Ethereum, Solana, and more. This app updates live using WebSocket for price and 24-hour change, with simulated data for other metrics.
-
-![Crypto Tracker Demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGtzNmRnOXR0c3Q0NWpneDBnMXNvNzE5eDZzZGMxZmhndmVnc3ZrayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/gjCwN2RxD5cLQg46gr/giphy.gif)
+A real-time cryptocurrency dashboard that tracks prices, trends, and other key financial metrics for top cryptocurrencies like Bitcoin, Ethereum, Solana, and more. This app updates live using WebSocket for price, volume 24h change and 24-hour change, with simulated data for other metrics while making sure that circulating supply, max_supply and market capital donot change every one or two seconds (as problem statement mentioned 2 second change in percent changes, price and 24h volume only).
 
 ---
 
@@ -11,17 +9,17 @@ A real-time cryptocurrency dashboard that tracks prices, trends, and other key f
 | Layer             | Technology                                          |
 |------------------|------------------------------------------------------|
 | Frontend         | **React.js** with functional components + hooks     |
-| Styling          | CSS Modules (`table.css`)                           |
+| State management  | Redux |
+| Styling          | CSS (`table.css`)                           |
 | Live Data        | Binance WebSocket API (`wss://stream.binance.com`)  |
-| Simulated Data   | JavaScript interval for 1h/7d change                |
-| Icons & Logos    | Freepik CDN PNGs                        |
-| Charts           | Sparkline charts from CoinGecko  (static)                   |
+| Icons ( Logos )    | Freepik CDN PNGs                        |
+| Chart images          | Sparkline charts from CoinGecko  (static)                   |
 
 
 ---
 
 ## Architecture  
-The Crypto Tracker Dashboard is built as a single-page application (SPA) using React.js, ensuring a fast and seamless user experience without page reloads. It leverages the Binance WebSocket API for real-time cryptocurrency price updates and 24-hour change data, maintaining a continuous connection for live streaming. Other financial metrics like 1-hour/7-day changes and market cap are simulated using JavaScript intervals to mimic dynamic behavior. The component-based architecture promotes modularity, with each UI segment—like the price table and sparkline charts—managed independently. This makes the application highly scalable, maintainable, and easy to extend with new features or additional cryptocurrencies.
+The Crypto Tracker Dashboard is built as a single-page application (SPA) using React.js, ensuring a fast and seamless user experience without page reloads. It leverages the Binance WebSocket API for real-time cryptocurrency price updates,24h volume change and 24-hour change data, maintaining a continuous connection for live streaming. Other financial metrics like 1-hour/7-day changes simulated using JavaScript intervals to mimic dynamic behavior. Other features are simulated using random function too but they donot change every 2seconds as it is not mentioned in the problem statement. We can change that as well by including it in the dispatch function along with random function instead of static random mock data. The component-based architecture promotes modularity, with each UI segment—like the price table and sparkline charts—managed independently. This makes the application highly scalable, maintainable, and easy to extend with new features or additional cryptocurrencies.
 
 ---
 
@@ -64,10 +62,7 @@ CRYPTO-TRACKER/
 │   │   └── crypto/
 │   │       ├── cryptoSlice.js
 │   │       └── cryptoTable.js
-│   ├── utils/
-│   │   └── mockWebSocket.js
-│   ├── initialdata.json
-│   ├── table.css
+|   |       └── table.css 
 │   ├── App.css
 │   ├── App.js
 │   ├── App.test.js
@@ -75,13 +70,14 @@ CRYPTO-TRACKER/
 │   ├── index.js
 │   ├── logo.svg
 │   └── reportWebVitals.js
+|   ├── styles.css
 ├── package.json
 ├── package-lock.json
 ```
 
 ---
 ## 🎥 Demo Video  
-▶️ [Watch Demo on YouTube](https://www.youtube.com/) 
+▶️ [Watch Demo on YouTube](https://youtu.be/UBA3lV7wdSI) 
 ---
 ## 📄 License  
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
